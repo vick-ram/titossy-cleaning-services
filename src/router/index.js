@@ -7,7 +7,6 @@ import {
 } from "vue-router";
 import routes from "./routes";
 import { useAuthStore } from "src/stores/authStore";
-import { currentUser } from "src/boot/firebase";
 
 export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER

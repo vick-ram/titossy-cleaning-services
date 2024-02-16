@@ -82,6 +82,7 @@ export const useAuthStore = defineStore("auth", {
         );
         await userCredential.user.reload();
         this.user = userCredential.user;
+        localStorage.setItem("user", JSON.stringify(this.user));
         console.log("User after signing in:", this.user);
       } catch (error) {
         switch (error.code) {
@@ -100,6 +101,7 @@ export const useAuthStore = defineStore("auth", {
     async signOutUser() {
       try {
         await signOut(auth);
+        localStorage.removeItem("user");
         this.user = null;
       } catch (error) {
         console.log(error);
@@ -115,11 +117,11 @@ export const useAuthStore = defineStore("auth", {
           if (storedUser) {
             this.user = JSON.parse(storedUser);
             if (
-              (router.isReady() &&
-                router.currentRoute.value.path === "/sign-in") ||
-              router.currentRoute.value.path === "/sign-up"
+              (this.router.isReady() &&
+                this.router.currentRoute.value.path === "/sign-in") ||
+              this.router.currentRoute.value.path === "/sign-up"
             ) {
-              router.push("/").catch((error) => {
+              this.router.push("/").catch((error) => {
                 console.log(error);
               });
             }
@@ -128,6 +130,12 @@ export const useAuthStore = defineStore("auth", {
           }
         }
       });
+    },
+    isAuthRoute() {
+      return (
+        (this.$state.user && this.router.currentRoute.path === "/sign-in") ||
+        this.router.currentRoute.path === "/sign-up"
+      );
     },
   },
 });

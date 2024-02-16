@@ -1,7 +1,8 @@
 <template>
   <div class="column">
     <q-drawer
-      v-if="store.$state.user"
+      v-if="store.isAuthRoute"
+      :key="store.$state.user"
       :mini="miniState"
       @mouseover="updateMiniState(false)"
       @mouseout="updateMiniState(true)"
@@ -14,7 +15,7 @@
       bordered
     >
       <!-- drawer content -->
-      <q-sroll-area class="fit">
+      <q-scroll-area class="fit">
         <q-list padding class="menu-list">
           <q-item>
             <q-item-section class="column items-center">
@@ -68,7 +69,7 @@
             <q-item-section>Reports</q-item-section>
           </q-item>
         </q-list>
-      </q-sroll-area>
+      </q-scroll-area>
     </q-drawer>
   </div>
 </template>
@@ -78,6 +79,7 @@ import { ref, watchEffect } from "vue";
 import { useAuthStore } from "src/stores/authStore";
 
 const store = useAuthStore();
+const miniState = ref(false);
 const props = defineProps({
   drawer: Boolean,
 });
@@ -86,7 +88,6 @@ watchEffect(() => {
   drawerState.value = props.drawer;
 });
 
-const miniState = ref(false);
 const updateMiniState = (state) => {
   miniState.value = state;
 };

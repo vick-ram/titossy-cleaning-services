@@ -42,9 +42,13 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { useAuthStore } from "src/stores/authStore";
+import { useRouter } from "vue-router";
 
 const emit = defineEmits(["updateDrawer"]);
+const store = useAuthStore();
+const router = useRouter();
+
 const logout = async () => {
   await store.signOutUser();
   router.push("/sign-in");
