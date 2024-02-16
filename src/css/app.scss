@@ -1,0 +1,14 @@
+// app global css in SCSS form
+.no-caps .q-btn__content span {
+  text-transform: none !important;
+}
+
+.underline-text {
+  text-decoration: underline;
+}
+
+.sidebae {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

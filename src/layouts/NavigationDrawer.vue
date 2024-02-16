@@ -1,0 +1,100 @@
+<template>
+  <div class="column">
+    <q-drawer
+      v-if="store.$state.user"
+      :mini="miniState"
+      @mouseover="updateMiniState(false)"
+      @mouseout="updateMiniState(true)"
+      elevated
+      show-if-above
+      v-model="drawerState"
+      :width="250"
+      :breakpoint="500"
+      side="left"
+      bordered
+    >
+      <!-- drawer content -->
+      <q-sroll-area class="fit">
+        <q-list padding class="menu-list">
+          <q-item>
+            <q-item-section class="column items-center">
+              <q-img
+                src="../assets/titossy_img.png"
+                alt="titossy"
+                width="100px"
+                height="100px"
+              ></q-img>
+            </q-item-section>
+          </q-item>
+          <q-item to="/" clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="dashboard" />
+            </q-item-section>
+            <q-item-section>Dashboard</q-item-section>
+          </q-item>
+
+          <q-item clickable to="/customer" v-ripple>
+            <q-item-section avatar>
+              <q-icon name="business" />
+            </q-item-section>
+            <q-item-section> Customers </q-item-section>
+          </q-item>
+
+          <q-item clickable to="/employees" v-ripple>
+            <q-item-section avatar>
+              <q-icon name="work" />
+            </q-item-section>
+            <q-item-section> Employees </q-item-section>
+          </q-item>
+
+          <q-item to="/schedule" clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="pending_actions" />
+            </q-item-section>
+            <q-item-section>Services</q-item-section>
+          </q-item>
+
+          <q-item to="/payment" clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="attach_money" />
+            </q-item-section>
+            <q-item-section>Payments</q-item-section>
+          </q-item>
+
+          <q-item to="/reporting" clickable v-ripple>
+            <q-item-section avatar>
+              <q-icon name="analytics" />
+            </q-item-section>
+            <q-item-section>Reports</q-item-section>
+          </q-item>
+        </q-list>
+      </q-sroll-area>
+    </q-drawer>
+  </div>
+</template>
+
+<script setup>
+import { ref, watchEffect } from "vue";
+import { useAuthStore } from "src/stores/authStore";
+
+const store = useAuthStore();
+const props = defineProps({
+  drawer: Boolean,
+});
+const drawerState = ref(false);
+watchEffect(() => {
+  drawerState.value = props.drawer;
+});
+
+const miniState = ref(false);
+const updateMiniState = (state) => {
+  miniState.value = state;
+};
+</script>
+<style lang="scss" scoped>
+.menu-list {
+  .q-item {
+    border-radius: 0 32px 32px 0;
+  }
+}
+</style>

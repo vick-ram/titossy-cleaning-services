@@ -1,0 +1,62 @@
+[
+  {
+    "name": "index",
+    "label": "#",
+    "type": "number",
+    "required": true,
+    "field": "index"
+  },
+  {
+    "name": "name",
+    "label": "Name",
+    "type": "text",
+    "required": true,
+    "field": "name",
+    "sortable": true
+  },
+  {
+    "name": "image",
+    "label": "Image",
+    "required": true,
+    "field": "image"
+  },
+  {
+    "name": "description",
+    "label": "Description",
+    "type": "text",
+    "required": true,
+    "field": "description",
+    "sortable": true
+  },
+  {
+    "name": "price",
+    "label": "Price",
+    "type": "number",
+    "required": true,
+    "field": "price",
+    "sortable": true
+  },
+  {
+    "name": "category",
+    "label": "Category",
+    "type": "text",
+    "required": true,
+    "field": "category",
+    "sortable": true
+  },
+  {
+    "name": "rating",
+    "label": "Rating",
+    "type": "number",
+    "required": true,
+    "field": "rating",
+    "sortable": true
+  },
+  {
+    "name": "status",
+    "label": "Status",
+    "required": true,
+    "field": "status",
+    "sortable": true
+  }
+]
