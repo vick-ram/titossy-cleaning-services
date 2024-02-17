@@ -1,8 +1,7 @@
 <template>
   <div class="column">
     <q-drawer
-      v-if="store.isAuthRoute"
-      :key="store.$state.user"
+      v-if="store.isAuthenticated"
       :mini="miniState"
       @mouseover="updateMiniState(false)"
       @mouseout="updateMiniState(true)"

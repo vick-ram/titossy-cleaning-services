@@ -25,7 +25,9 @@ export default route(function (/* { store, ssrContext } */) {
   Router.beforeEach(async (to, from, next) => {
     const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
     const isAuthenticated = useAuthStore().isAuthenticated;
-
+    if (!useAuthStore().isInitialized) {
+      await useAuthStore().init();
+    }
     if (requiresAuth && !isAuthenticated) {
       next("/sign-in");
     } else if (

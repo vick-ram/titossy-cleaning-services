@@ -12,50 +12,62 @@ import { useRouter } from "vue-router";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
+    isInitialized: false,
     router: useRouter(),
-    user: null,
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    user: {},
   }),
   getters: {
-    firstName() {
+    first_name() {
       console.log("User in firstName getter:", this.user);
-      return this.user && this.user.displayName
-        ? this.user.displayName.split(" ")[0]
-        : "";
+      if (this.user && this.user.displayName) {
+        const names = this.user.displayName.split(" ");
+        return names.length > 0 ? names[0] : "";
+      }
+      return "";
     },
-    lastName() {
+    last_name() {
       console.log("User in lastName getter:", this.user);
-      return this.user && this.user.displayName
-        ? this.user.displayName.split(" ")[1]
-        : "";
+      if (this.user && this.user.displayName) {
+        const names = this.user.displayName.split(" ");
+        return names.length > 1 ? names[1] : "";
+      }
+      return "";
     },
     isAuthenticated() {
-      return this.user !== null;
+      return Object.keys(this.user).length !== 0;
     },
   },
   actions: {
-    async registerUser(firstName, lastName, email, password) {
+    async registerUser() {
       try {
         const userCredential = await createUserWithEmailAndPassword(
           auth,
-          email,
-          password
+          this.email,
+          this.password
         );
         const user = userCredential.user;
-        const displayName = `${firstName} ${lastName}`;
+        const displayName = `${this.firstName} ${this.lastName}`;
         await updateProfile(user, { displayName });
         user.displayName = displayName;
         await setDoc(doc(db, "employees", user.uid), {
-          firstName: firstName,
-          lastName: lastName,
+          firstName: this.firstName,
+          lastName: this.lastName,
           email: user.email,
-          password: password,
+          password: this.password,
           role: "admin",
         });
         this.user = {
           ...user,
           displayName: displayName,
         };
-        localStorage.setItem("user", JSON.stringify(this.user));
+        this.router.push("/").catch((error) => {
+          console.log(error);
+        });
+        // localStorage.setItem("user", JSON.stringify(this.user));
       } catch (error) {
         switch (error.code) {
           case "auth/email-already-in-use":
@@ -73,17 +85,22 @@ export const useAuthStore = defineStore("auth", {
       }
     },
 
-    async signInUser(email, password) {
+    async signInUser() {
       try {
         const userCredential = await signInWithEmailAndPassword(
           auth,
-          email,
-          password
+          this.email,
+          this.password
         );
-        await userCredential.user.reload();
-        this.user = userCredential.user;
-        localStorage.setItem("user", JSON.stringify(this.user));
-        console.log("User after signing in:", this.user);
+        // await userCredential.user.reload();
+        // this.user = userCredential.user;
+        // localStorage.setItem("user", JSON.stringify(this.user));
+        // console.log("User after signing in:", this.user);
+        if (userCredential.user) {
+          this.router.push("/").catch((error) => {
+            console.log(error);
+          });
+        }
       } catch (error) {
         switch (error.code) {
           case "auth/user-not-found":
@@ -101,41 +118,62 @@ export const useAuthStore = defineStore("auth", {
     async signOutUser() {
       try {
         await signOut(auth);
-        localStorage.removeItem("user");
-        this.user = null;
+        this.router.push("/sign-in").catch((error) => {
+          console.log(error);
+        });
+        // localStorage.removeItem("user");
+        this.email = "";
+        this.password = "";
+        this.firstName = "";
+        this.lastName = "";
+        this.user = {};
       } catch (error) {
         console.log(error);
       }
     },
 
-    watchAuthState() {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          this.user = user;
-        } else {
-          const storedUser = localStorage.getItem("user");
-          if (storedUser) {
-            this.user = JSON.parse(storedUser);
-            if (
-              (this.router.isReady() &&
-                this.router.currentRoute.value.path === "/sign-in") ||
-              this.router.currentRoute.value.path === "/sign-up"
-            ) {
-              this.router.push("/").catch((error) => {
-                console.log(error);
-              });
-            }
+    // watchAuthState() {
+    //   onAuthStateChanged(auth, (user) => {
+    //     if (user) {
+    //       this.user = user;
+    //     } else {
+    //       const storedUser = localStorage.getItem("user");
+    //       if (storedUser) {
+    //         this.user = JSON.parse(storedUser);
+    //         if (
+    //           (this.router.isReady() &&
+    //             this.router.currentRoute.value.path === "/sign-in") ||
+    //           this.router.currentRoute.value.path === "/sign-up"
+    //         ) {
+    //           this.router.push("/").catch((error) => {
+    //             console.log(error);
+    //           });
+    //         }
+    //       } else {
+    //         this.user = null;
+    //       }
+    //     }
+    //   });
+    // }
+    init() {
+      return new Promise((resolve) => {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            this.user.id = user.uid;
+            this.user.email = user.email;
+            this.router.push("/").catch((error) => {
+              console.log(error);
+            });
           } else {
-            this.user = null;
+            this.user = {};
+            this.router.push("/sign-in").catch((error) => {
+              console.log(error);
+            });
           }
-        }
+          this.isInitialized = true;
+          resolve();
+        });
       });
-    },
-    isAuthRoute() {
-      return (
-        (this.$state.user && this.router.currentRoute.path === "/sign-in") ||
-        this.router.currentRoute.path === "/sign-up"
-      );
     },
   },
 });

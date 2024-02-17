@@ -5,20 +5,15 @@
         <q-card-section class="q-gutter-md">
           <h6>Sign Up</h6>
           <q-input
-            v-model="admin.first_name"
+            v-model="firstName"
             type="text"
             outlined
             label="first name"
           />
+          <q-input v-model="lastName" type="text" outlined label="last name" />
+          <q-input v-model="email" type="email" outlined label="email" />
           <q-input
-            v-model="admin.last_name"
-            type="text"
-            outlined
-            label="last name"
-          />
-          <q-input v-model="admin.email" type="email" outlined label="email" />
-          <q-input
-            v-model="admin.password"
+            v-model="password"
             type="password"
             outlined
             label="password"
@@ -39,48 +34,19 @@
 </template>
 
 <script setup>
+import { storeToRefs } from "pinia";
 import { ref } from "vue";
-import { useRouter } from "vue-router";
 import { useAuthStore } from "src/stores/authStore";
 
-const router = useRouter();
-const admin = ref({
-  first_name: "",
-  last_name: "",
-  email: "",
-  password: "",
-  role: "admin",
-});
 const store = useAuthStore();
+const { firstName, lastName, email, password } = storeToRefs(store);
 const submitting = ref(false);
 
 const signUp = async () => {
   submitting.value = true;
-  const newUser = await store.registerUser(
-    admin.value.first_name,
-    admin.value.last_name,
-    admin.value.email,
-    admin.value.password
-  );
-  if (newUser) {
-    store.user = newUser;
-    router.push("/");
-  } else {
-    console.log("Registration failed");
-  }
+  await store.registerUser();
   setTimeout(() => {
     submitting.value = false;
   }, 2000);
-  clear();
-};
-
-const clear = () => {
-  admin.value = {
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    role: "admin",
-  };
 };
 </script>

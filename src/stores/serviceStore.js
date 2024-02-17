@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { db, storage, ref, uploadBytes, getDownloadURL } from "boot/firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
 
 export const useServiceStore = defineStore("service", {
   state: () => ({
@@ -15,18 +15,26 @@ export const useServiceStore = defineStore("service", {
     },
   }),
   actions: {
-    onFileChange(e) {
-      this.services.image = e;
-    },
-    async addService() {
+    async addService(service) {
       try {
-        if (this.services.image) {
-          let imageRef = ref(storage, "services/" + this.services.image.name);
-          await uploadBytes(imageRef, this.services.image);
-          this.services.image = await getDownloadURL(imageRef);
+        if (service.image) {
+          if (!service.image.name) {
+            throw new Error("Image file has no name.");
+          }
+          let imageRef = ref(storage, `services/${service.image.name}`);
+          await uploadBytes(imageRef, service.image);
+          let imageUrl = await getDownloadURL(imageRef);
+          let createdAt = Timestamp();
+          // service.image = await getDownloadURL(imageRef);
+
+          // await addDoc(collection(db, "service"), service);
+          await addDoc(collection(db, "service"), {
+            ...service,
+            image: imageUrl,
+            createdAt,
+          });
+          console.log("Document written with ID: ", serviceData.id);
         }
-        await addDoc(collection(db, "service"), this.services);
-        console.log("Document written with ID: ");
       } catch (e) {
         switch (e.code) {
           case "storage/unknown":

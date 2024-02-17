@@ -4,9 +4,9 @@
       <q-card class="q-pa-md" style="min-width: 300px">
         <q-card-section class="q-gutter-md">
           <div class="text-h6">Sign In</div>
-          <q-input v-model="admin.email" outlined label="Email" type="email" />
+          <q-input v-model="email" outlined label="Email" type="email" />
           <q-input
-            v-model="admin.password"
+            v-model="password"
             outlined
             label="Password"
             type="password"
@@ -44,33 +44,17 @@
 <script setup>
 import { ref } from "vue";
 import { useAuthStore } from "src/stores/authStore";
-import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 
-const admin = ref({});
 const authStore = useAuthStore();
 const submitting = ref(false);
-const router = useRouter();
 
+const { email, password } = storeToRefs(authStore);
 const signIn = async () => {
   submitting.value = true;
-  const newUser = await authStore.signInUser(
-    admin.value.email,
-    admin.value.password
-  );
-  if (newUser !== null) {
-    authStore.user = newUser;
-    router.push("/");
-    console.log("Navigating to dashboard");
-  } else {
-    console.log("Sign in failed");
-  }
+  await authStore.signInUser();
   setTimeout(() => {
     submitting.value = false;
   }, 2000);
-  clear();
-};
-
-const clear = () => {
-  admin.value = {};
 };
 </script>

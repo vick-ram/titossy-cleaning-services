@@ -1,7 +1,7 @@
 <template>
   <q-layout>
     <q-table
-      :rows="rows"
+      :rows="row"
       :columns="columns"
       row-key="name"
       title="Services"
@@ -90,7 +90,7 @@
             <q-file
               filled
               v-model="service.image"
-              @update:model-value="serviceStore.onFileChange"
+              @update:model-value="onFileChange"
               label="Service Image"
               class="q-mb-md"
               accept="image/*"
@@ -127,7 +127,7 @@ import { db } from "src/boot/firebase";
 import { collection, onSnapshot } from "firebase/firestore";
 
 const serviceStore = useServiceStore();
-const rows = ref([]);
+const row = ref([]);
 const filter = ref("");
 const openDialog = ref(false);
 const service = ref({
@@ -144,18 +144,24 @@ const loading = ref(false);
 const addService = async () => {
   await serviceStore.addService(service.value);
   openDialog.value = false;
+  console.log("Service added");
+};
+
+const onFileChange = (e) => {
+  service.value.image = e.target.files[0];
 };
 
 onMounted(async () => {
-  const unsubscribe = onSnapshot(collection(db, "services"), (snapshot) => {
+  const unsubscribe = onSnapshot(collection(db, "service"), (snapshot) => {
     let index = 1;
-    rows.value = [];
+    row.value = [];
     snapshot.forEach((doc) => {
       const data = { id: doc.id, index: index, ...doc.data() };
-      rows.value.push(data);
+      row.value.push(data);
       index++;
     });
   });
+  console.log("Unsubscribed", unsubscribe);
   return unsubscribe;
 });
 </script>

@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <q-layout view="hHh Lpr lff">
       <MainLayout />
-      <q-page-container v-if="store.isAuthRoute" :key="store.$state.user">
+      <q-page-container>
         <router-view />
       </q-page-container>
     </q-layout>
@@ -17,6 +17,6 @@ import MainLayout from "./layouts/MainLayout.vue";
 const store = useAuthStore();
 
 onBeforeMount(() => {
-  store.watchAuthState();
+  store.init();
 });
 </script>
