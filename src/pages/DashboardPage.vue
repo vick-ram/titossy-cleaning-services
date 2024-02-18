@@ -1,9 +1,12 @@
 <template>
   <div class="q-pa-md">
-    <DashboardCard />
+    <div class="q-mt-md">
+      <customer-line-chart />
+      <customer-line-chart />
+    </div>
   </div>
 </template>
 
 <script setup>
-import DashboardCard from "components/DashboardCard.vue";
+import CustomerLineChart from "src/components/dashboard/CustomerLineChart.vue";
 </script>

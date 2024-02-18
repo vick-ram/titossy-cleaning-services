@@ -26,15 +26,6 @@
           <q-td :key="name" :props="props">
             {{ props.row.name }}
           </q-td>
-          <q-td :key="image" :props="props">
-            <q-img
-              :src="props.row.image"
-              :ratio="16 / 9"
-              spinner-color="primary"
-              spinner-size="82px"
-              style="width: 100px; height: 100px; object-fit: cover"
-            />
-          </q-td>
           <q-td :key="description" :props="props">
             {{ props.row.description }}
           </q-td>
@@ -50,6 +41,9 @@
           <q-td :key="status" :props="props">
             {{ props.row.status }}
           </q-td>
+          <q-td :key="createdAt" :props="props">
+            {{ props.row.createdAt }}
+          </q-td>
         </q-tr>
       </template>
     </q-table>
@@ -62,26 +56,26 @@
           <q-card-section class="q-gutter-md">
             <h6>Add service</h6>
             <q-input
-              v-model="service.name"
+              v-model="serviceStore.services.name"
               label="Service Name"
               outlined
               class="q-mb-md"
             />
             <q-input
-              v-model="service.price"
+              v-model="serviceStore.services.price"
               label="Price"
               type="number"
               outlined
               class="q-mb-md"
             />
             <q-input
-              v-model="service.category"
+              v-model="serviceStore.services.category"
               label="Category"
               outlined
               class="q-mb-md"
             />
             <q-input
-              v-model="service.description"
+              v-model="serviceStore.services.description"
               label="Description"
               type="textarea"
               outlined
@@ -89,13 +83,11 @@
             />
             <q-file
               filled
-              v-model="service.image"
-              @update:model-value="onFileChange"
+              v-model="serviceStore.services.image"
               label="Service Image"
               class="q-mb-md"
               accept="image/*"
-              max-files="3"
-              multiple
+              max-files="1"
             >
               <template #prepend>
                 <q-icon name="image" />
@@ -130,25 +122,17 @@ const serviceStore = useServiceStore();
 const row = ref([]);
 const filter = ref("");
 const openDialog = ref(false);
-const service = ref({
-  name: "",
-  image: null,
-  description: "",
-  price: 0,
-  category: "",
-  rating: 0,
-  status: "pending",
-});
 const loading = ref(false);
+const imageUrl = ref("");
 
 const addService = async () => {
-  await serviceStore.addService(service.value);
-  openDialog.value = false;
-  console.log("Service added");
-};
-
-const onFileChange = (e) => {
-  service.value.image = e.target.files[0];
+  loading.value = true;
+  await serviceStore.addService();
+  serviceStore.services = {};
+  setTimeout(() => {
+    openDialog.value = false;
+    loading.value = false;
+  }, 1000);
 };
 
 onMounted(async () => {

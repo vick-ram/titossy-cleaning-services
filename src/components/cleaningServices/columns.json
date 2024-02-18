@@ -15,12 +15,6 @@
     "sortable": true
   },
   {
-    "name": "image",
-    "label": "Image",
-    "required": true,
-    "field": "image"
-  },
-  {
     "name": "description",
     "label": "Description",
     "type": "text",
@@ -57,6 +51,14 @@
     "label": "Status",
     "required": true,
     "field": "status",
+    "sortable": true
+  },
+  {
+    "name": "createdAt",
+    "label": "Created At",
+    "type": "date",
+    "required": true,
+    "field": "createdAt",
     "sortable": true
   }
 ]
