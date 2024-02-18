@@ -2,62 +2,60 @@
   {
     "name": "index",
     "label": "#",
-    "type": "number",
-    "required": true,
     "field": "index"
   },
   {
     "name": "name",
     "label": "Name",
-    "type": "text",
-    "required": true,
+    "align": "left",
     "field": "name",
     "sortable": true
   },
   {
+    "name": "image",
+    "label": "Image",
+    "align": "center",
+    "field": "image"
+  },
+  {
     "name": "description",
     "label": "Description",
-    "type": "text",
-    "required": true,
+    "align": "left",
     "field": "description",
     "sortable": true
   },
   {
     "name": "price",
     "label": "Price",
-    "type": "number",
-    "required": true,
+    "align": "left",
     "field": "price",
     "sortable": true
   },
   {
     "name": "category",
     "label": "Category",
-    "type": "text",
-    "required": true,
+    "align": "left",
     "field": "category",
     "sortable": true
   },
   {
     "name": "rating",
     "label": "Rating",
-    "type": "number",
-    "required": true,
+    "align": "left",
     "field": "rating",
     "sortable": true
   },
   {
     "name": "status",
     "label": "Status",
-    "required": true,
+    "align": "left",
     "field": "status",
     "sortable": true
   },
   {
     "name": "createdAt",
     "label": "Created At",
-    "type": "date",
-    "required": true,
+    "align": "left",
     "field": "createdAt",
     "sortable": true
   }

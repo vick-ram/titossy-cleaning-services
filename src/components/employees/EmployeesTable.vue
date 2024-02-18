@@ -199,23 +199,15 @@ const toggleStatus = async (row) => {
   row.status = row.status === "Approved" ? "Pending" : "Approved";
   await updateDoc(doc(db, "employees", row.id), { status: row.status });
 };
-// onMounted(async () => {
-//   const unsubscribe = onSnapshot(collection(db, "employees"), (snapshot) => {
-//     snapshot.forEach((doc) => {
-//       row.value.push({ id: doc.id, ...doc.data() });
-//     });
-//   });
-//   return unsubscribe;
-// });
 
 onMounted(async () => {
   const unsubscribe = onSnapshot(collection(db, "employees"), (snapshot) => {
-    let index = 1; // Initialize index counter
-    row.value = []; // Clear row.value
+    let index = 1;
+    row.value = [];
     snapshot.forEach((doc) => {
-      const data = { id: doc.id, index: index, ...doc.data() }; // Assign index to 'index' field
+      const data = { id: doc.id, index: index, ...doc.data() };
       row.value.push(data);
-      index++; // Increment index counter
+      index++;
     });
   });
   return unsubscribe;

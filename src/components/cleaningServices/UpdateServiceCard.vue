@@ -20,28 +20,35 @@
       </template>
       <template #body="props">
         <q-tr :props="props">
-          <q-td :key="index" :props="props">
+          <q-td :key="'index'" :props="props">
             {{ props.row.index }}
           </q-td>
-          <q-td :key="name" :props="props">
+          <q-td :key="'name'" :props="props">
             {{ props.row.name }}
           </q-td>
-          <q-td :key="description" :props="props">
+          <q-td :key="'image'" :props="props">
+            <q-img
+              :src="props.row.image"
+              style="width: 50px; height: 50px"
+              class="rounded-borders"
+            />
+          </q-td>
+          <q-td :key="'description'" :props="props">
             {{ props.row.description }}
           </q-td>
-          <q-td :key="price" :props="props">
+          <q-td :key="'price'" :props="props">
             {{ props.row.price }}
           </q-td>
-          <q-td :key="category" :props="props">
+          <q-td :key="'category'" :props="props">
             {{ props.row.category }}
           </q-td>
-          <q-td :key="rating" :props="props">
+          <q-td :key="'rating'" :props="props">
             {{ props.row.rating }}
           </q-td>
-          <q-td :key="status" :props="props">
+          <q-td :key="'status'" :props="props">
             {{ props.row.status }}
           </q-td>
-          <q-td :key="createdAt" :props="props">
+          <q-td :key="'createdAt'" :props="props">
             {{ props.row.createdAt }}
           </q-td>
         </q-tr>
@@ -112,19 +119,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import columns from "./columns.json";
 import { useServiceStore } from "src/stores/serviceStore";
-import { db } from "src/boot/firebase";
-import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "boot/firebase";
+import { collection, onSnapshot, updateDoc, doc } from "firebase/firestore";
 
 const serviceStore = useServiceStore();
 const row = ref([]);
 const filter = ref("");
 const openDialog = ref(false);
 const loading = ref(false);
-const imageUrl = ref("");
 
+// Adding a new service
 const addService = async () => {
   loading.value = true;
   await serviceStore.addService();
@@ -134,6 +141,18 @@ const addService = async () => {
     loading.value = false;
   }, 1000);
 };
+
+// updating the service
+watch(
+  row,
+  async (newData) => {
+    for (const updatedRow of newData) {
+      const { id, ...data } = updatedRow;
+      await updateDoc(doc(db, "service", id), data);
+    }
+  },
+  { deep: true }
+);
 
 onMounted(async () => {
   const unsubscribe = onSnapshot(collection(db, "service"), (snapshot) => {
