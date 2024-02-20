@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { db, storage, ref, uploadBytes, getDownloadURL } from "boot/firebase";
-import { Timestamp, addDoc, collection, onSnapshot } from "firebase/firestore";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
+import moment from "moment";
 
 export const useServiceStore = defineStore("service", {
   state: () => ({
@@ -25,7 +26,16 @@ export const useServiceStore = defineStore("service", {
           let imageRef = ref(storage, `services/${this.services.image.name}`);
           await uploadBytes(imageRef, this.services.image);
           this.services.image = await getDownloadURL(imageRef);
-          this.services.createdAt = Timestamp.now();
+
+          let timestamp = Timestamp.now();
+          const date = timestamp.toDate();
+          const formattedDate = moment(date).format("MMMM Do YYYY, h:mm:ss a");
+
+          // Display the formatted date on the UI
+          console.log(formattedDate);
+          this.services.createdAt = formattedDate;
+          console.log(this.services.createdAt);
+          // this.services.createdAt = Timestamp.now();
         }
         await addDoc(collection(db, "service"), this.services);
         console.log("Document written with ID: ", this.services.id);

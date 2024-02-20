@@ -1,0 +1,80 @@
+[
+  {
+    "name": "index",
+    "label": "#",
+    "field": "index",
+    "required": true
+  },
+  {
+    "name": "code",
+    "label": "Ref code",
+    "field": "ref_number",
+    "align": "left",
+    "required": true,
+    "sortable": true
+  },
+  {
+    "name": "service_id",
+    "label": "Service",
+    "field": "service_id",
+    "align": "left",
+    "required": true,
+    "sortable": true
+  },
+  {
+    "name": "customer_id",
+    "label": "Customer",
+    "field": "customer_id",
+    "align": "left",
+    "required": true,
+    "sortable": true
+  },
+  {
+    "name": "product_id",
+    "label": "Product",
+    "field": "product_id",
+    "align": "left",
+    "required": true,
+    "sortable": true
+  },
+  {
+    "name": "supplier_id",
+    "label": "Supplier",
+    "field": "supplier_id",
+    "align": "left",
+    "required": true,
+    "sortable": true
+  },
+  {
+    "name": "amount",
+    "label": "Amount",
+    "field": "amount",
+    "align": "left",
+    "required": true,
+    "sortable": true
+  },
+  {
+    "name": "date_paid",
+    "label": "Date paid",
+    "field": "date_paid",
+    "align": "left",
+    "required": true,
+    "sortable": true
+  },
+  {
+    "name": "date_updated",
+    "label": "Date updated",
+    "field": "date_updated",
+    "align": "left",
+    "required": true,
+    "sortable": true
+  },
+  {
+    "name": "status",
+    "label": "Status",
+    "field": "status",
+    "align": "left",
+    "required": true,
+    "sortable": true
+  }
+]

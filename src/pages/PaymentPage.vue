@@ -1,15 +1,11 @@
 <template>
-  <div class="payment-page">
-    <h1>Payment Page</h1>
-    <!-- Add your payment form or components here -->
+  <div class="q-pa-md q-mt-md">
+    <PaymentTable />
   </div>
 </template>
 
-<script>
-export default {
-  name: "PaymentPage",
-  // Add your component's logic here
-};
+<script setup>
+import PaymentTable from "src/components/payment/PaymentTable.vue";
 </script>
 
 <style scoped></style>

@@ -1,7 +1,6 @@
 <template>
   <div class="q-pa-md">
-    <div class="q-mt-md">
-      <customer-line-chart />
+    <div class="q-mt-md flex row">
       <customer-line-chart />
     </div>
   </div>

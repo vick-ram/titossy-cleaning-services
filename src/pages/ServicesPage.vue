@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-column">
+  <div class="q-pa-md q-mt-md">
     <UpdateServiceCard />
   </div>
 </template>

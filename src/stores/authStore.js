@@ -67,7 +67,6 @@ export const useAuthStore = defineStore("auth", {
         this.router.push("/").catch((error) => {
           console.log(error);
         });
-        // localStorage.setItem("user", JSON.stringify(this.user));
       } catch (error) {
         switch (error.code) {
           case "auth/email-already-in-use":
@@ -92,10 +91,6 @@ export const useAuthStore = defineStore("auth", {
           this.email,
           this.password
         );
-        // await userCredential.user.reload();
-        // this.user = userCredential.user;
-        // localStorage.setItem("user", JSON.stringify(this.user));
-        // console.log("User after signing in:", this.user);
         if (userCredential.user) {
           this.router.push("/").catch((error) => {
             console.log(error);
@@ -121,7 +116,6 @@ export const useAuthStore = defineStore("auth", {
         this.router.push("/sign-in").catch((error) => {
           console.log(error);
         });
-        // localStorage.removeItem("user");
         this.email = "";
         this.password = "";
         this.firstName = "";
@@ -132,29 +126,6 @@ export const useAuthStore = defineStore("auth", {
       }
     },
 
-    // watchAuthState() {
-    //   onAuthStateChanged(auth, (user) => {
-    //     if (user) {
-    //       this.user = user;
-    //     } else {
-    //       const storedUser = localStorage.getItem("user");
-    //       if (storedUser) {
-    //         this.user = JSON.parse(storedUser);
-    //         if (
-    //           (this.router.isReady() &&
-    //             this.router.currentRoute.value.path === "/sign-in") ||
-    //           this.router.currentRoute.value.path === "/sign-up"
-    //         ) {
-    //           this.router.push("/").catch((error) => {
-    //             console.log(error);
-    //           });
-    //         }
-    //       } else {
-    //         this.user = null;
-    //       }
-    //     }
-    //   });
-    // }
     init() {
       return new Promise((resolve) => {
         onAuthStateChanged(auth, (user) => {

@@ -1,0 +1,63 @@
+[
+  {
+    "name": "index",
+    "label": "#",
+    "field": "index"
+  },
+  {
+    "name": "firstName",
+    "label": "FirstName",
+    "align": "left",
+    "field": "firstName",
+    "sortable": true
+  },
+  {
+    "name": "lastName",
+    "label": "LastName",
+    "align": "left",
+    "field": "lastName",
+    "sortable": true
+  },
+  {
+    "name": "gender",
+    "label": "Gender",
+    "align": "left",
+    "field": "gender",
+    "sortable": true
+  },
+  {
+    "name": "email",
+    "label": "Email",
+    "align": "left",
+    "field": "email",
+    "sortable": true
+  },
+  {
+    "name": "phone",
+    "label": "Phone",
+    "align": "left",
+    "field": "phone",
+    "sortable": true
+  },
+  {
+    "name": "address",
+    "label": "Address",
+    "align": "left",
+    "field": "address",
+    "sortable": true
+  },
+  {
+    "name": "status",
+    "label": "Status",
+    "align": "center",
+    "field": "status",
+    "sortable": true
+  },
+  {
+    "name": "actions",
+    "label": "Actions",
+    "align": "center",
+    "field": "pending",
+    "sortable": false
+  }
+]

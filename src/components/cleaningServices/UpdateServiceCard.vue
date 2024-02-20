@@ -1,5 +1,5 @@
 <template>
-  <q-layout>
+  <div>
     <q-table
       :rows="row"
       :columns="columns"
@@ -16,7 +16,7 @@
           style="text-transform: capitalize"
           @click="openDialog = true"
         />
-        <q-input v-model="filter" label="Search" outlined dense />
+        <q-input v-model="filter" debounce label="Search" outlined dense />
       </template>
       <template #body="props">
         <q-tr :props="props">
@@ -25,13 +25,6 @@
           </q-td>
           <q-td :key="'name'" :props="props">
             {{ props.row.name }}
-          </q-td>
-          <q-td :key="'image'" :props="props">
-            <q-img
-              :src="props.row.image"
-              style="width: 50px; height: 50px"
-              class="rounded-borders"
-            />
           </q-td>
           <q-td :key="'description'" :props="props">
             {{ props.row.description }}
@@ -48,9 +41,9 @@
           <q-td :key="'status'" :props="props">
             {{ props.row.status }}
           </q-td>
-          <q-td :key="'createdAt'" :props="props">
+          <!-- <q-td :key="'createdAt'" :props="props">
             {{ props.row.createdAt }}
-          </q-td>
+          </q-td> -->
         </q-tr>
       </template>
     </q-table>
@@ -58,7 +51,7 @@
       <q-dialog v-model="openDialog">
         <q-card class="q-pa-md" style="min-width: 450px">
           <q-card-actions align="right">
-            <q-btn round icon="cancel" v-close-popup dense />
+            <q-btn flat icon="cancel" v-close-popup dense />
           </q-card-actions>
           <q-card-section class="q-gutter-md">
             <h6>Add service</h6>
@@ -115,7 +108,7 @@
         </q-card>
       </q-dialog>
     </div>
-  </q-layout>
+  </div>
 </template>
 
 <script setup>

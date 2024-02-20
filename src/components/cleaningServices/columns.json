@@ -12,12 +12,6 @@
     "sortable": true
   },
   {
-    "name": "image",
-    "label": "Image",
-    "align": "center",
-    "field": "image"
-  },
-  {
     "name": "description",
     "label": "Description",
     "align": "left",
@@ -50,13 +44,6 @@
     "label": "Status",
     "align": "left",
     "field": "status",
-    "sortable": true
-  },
-  {
-    "name": "createdAt",
-    "label": "Created At",
-    "align": "left",
-    "field": "createdAt",
     "sortable": true
   }
 ]

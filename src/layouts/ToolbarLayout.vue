@@ -22,12 +22,6 @@
               </q-item-section>
               <q-item-section>Profile</q-item-section>
             </q-item>
-            <q-item clickable v-ripple v-close-popup>
-              <q-item-section avatar>
-                <q-icon name="settings" />
-              </q-item-section>
-              <q-item-section>Settings</q-item-section>
-            </q-item>
             <q-item clickable v-ripple v-close-popup @click="logout">
               <q-item-section avatar>
                 <q-icon name="logout" />
