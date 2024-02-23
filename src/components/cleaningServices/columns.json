@@ -45,5 +45,11 @@
     "align": "left",
     "field": "status",
     "sortable": true
+  },
+  {
+    "name": "actions",
+    "label": "Action",
+    "align": "center",
+    "field": "actions"
   }
 ]

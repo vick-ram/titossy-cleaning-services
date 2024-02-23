@@ -38,12 +38,21 @@
           <q-td :key="'rating'" :props="props">
             {{ props.row.rating }}
           </q-td>
-          <q-td :key="'status'" :props="props">
+          <q-td :key="'status'" :props="props" class="text-orange-6">
             {{ props.row.status }}
           </q-td>
-          <!-- <q-td :key="'createdAt'" :props="props">
-            {{ props.row.createdAt }}
-          </q-td> -->
+          <q-td key="actions" :props="props">
+            <q-btn
+              color="primary"
+              size="sm"
+              flat
+              circle
+              dense
+              @click="edit(props.row)"
+            >
+              <q-icon name="edit" />
+            </q-btn>
+          </q-td>
         </q-tr>
       </template>
     </q-table>
@@ -123,6 +132,7 @@ const row = ref([]);
 const filter = ref("");
 const openDialog = ref(false);
 const loading = ref(false);
+const editedIndex = ref(-1);
 
 // Adding a new service
 const addService = async () => {
@@ -160,4 +170,10 @@ onMounted(async () => {
   console.log("Unsubscribed", unsubscribe);
   return unsubscribe;
 });
+
+const edit = (item) => {
+  editedIndex.value = row.value.indexOf(item);
+  serviceStore.services = Object.assign({}, item);
+  openDialog.value = true;
+};
 </script>

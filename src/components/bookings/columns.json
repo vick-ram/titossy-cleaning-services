@@ -1,0 +1,41 @@
+[
+  {
+    "name": "index",
+    "label": "#",
+    "field": "index"
+  },
+  {
+    "name": "booking_id",
+    "label": "Booking ID",
+    "field": "booking_id",
+    "required": true,
+    "sortable": true
+  },
+  {
+    "name": "booking_date",
+    "label": "Booking Date",
+    "field": "date_booked",
+    "required": true,
+    "sortable": true
+  },
+  {
+    "name": "amount",
+    "label": "Amount",
+    "field": "amount",
+    "required": true,
+    "sortable": true
+  },
+  {
+    "name": "status",
+    "label": "Status",
+    "field": "status",
+    "required": true,
+    "sortable": true
+  },
+  {
+    "name": "action",
+    "label": "Action",
+    "field": "action",
+    "required": true
+  }
+]

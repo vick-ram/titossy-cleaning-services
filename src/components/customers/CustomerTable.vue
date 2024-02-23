@@ -257,9 +257,11 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
+import useCustomerData from "app/public/fetchCustomer";
 
+const { row } = useCustomerData();
 const filter = ref("");
-const row = ref([]);
+// const row = ref([]);
 const open = ref(false);
 const loading = ref(false);
 const customer = ref({
@@ -313,19 +315,19 @@ const toggleStatus = async (row) => {
   await updateDoc(doc(db, "customer", row.id), { status: row.status });
 };
 
-onMounted(async () => {
-  const unsubscribe = onSnapshot(collection(db, "customer"), (snapshot) => {
-    let index = 1;
-    row.value = [];
-    snapshot.forEach((doc) => {
-      const data = { id: doc.id, index: index, ...doc.data() };
-      row.value.push(data);
-      index++;
-    });
-    console.log(row.value);
-  });
-  return unsubscribe;
-});
+// onMounted(async () => {
+//   const unsubscribe = onSnapshot(collection(db, "customer"), (snapshot) => {
+//     let index = 1;
+//     row.value = [];
+//     snapshot.forEach((doc) => {
+//       const data = { id: doc.id, index: index, ...doc.data() };
+//       row.value.push(data);
+//       index++;
+//     });
+//     console.log(row.value);
+//   });
+//   return unsubscribe;
+// });
 
 // Deletes an employee from the database
 const deleteRow = async (id) => {

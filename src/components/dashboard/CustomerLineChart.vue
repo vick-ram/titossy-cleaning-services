@@ -5,10 +5,10 @@
         <q-card-section horizontal>
           <q-card-section class="q-pt-xs">
             <div class="text-h5 text-overline text-grey-6">CUSTOMERS</div>
-            <div class="text-h6 text-overline q-mb-md">200</div>
+            <div class="text-h6 text-overline q-mb-md">{{ row.length }}</div>
             <div class="row justify-start content-center">
               <q-icon name="arrow_upward" class="q-pr-sm" />
-              <p class="text-blue-5 q-pr-sm">3.48%</p>
+              <p class="text-blue-5 q-pr-sm">0.0%</p>
               <p>since last month</p>
             </div>
           </q-card-section>
@@ -26,10 +26,10 @@
         <q-card-section horizontal>
           <q-card-section class="q-pt-xs">
             <div class="text-h5 text-overline text-grey-6">BOOKINGS</div>
-            <div class="text-h6 text-overline q-mb-md">40</div>
+            <div class="text-h6 text-overline q-mb-md">0</div>
             <div class="row justify-start content-center">
               <q-icon name="menu" class="q-pr-sm" />
-              <p class="text-blue-5 q-pr-sm">4.02%</p>
+              <p class="text-blue-5 q-pr-sm">0.0%</p>
               <p>since last month</p>
             </div>
           </q-card-section>
@@ -47,10 +47,10 @@
         <q-card-section horizontal>
           <q-card-section class="q-pt-xs">
             <div class="text-h5 text-overline text-grey-6">REVENUE</div>
-            <div class="text-h6 text-overline q-mb-md">KSHS.12,000</div>
+            <div class="text-h6 text-overline q-mb-md">KSHS. 0.0</div>
             <div class="row justify-start content-center">
               <q-icon name="arrow_downward" class="q-pr-sm" />
-              <p class="text-blue-5 q-pr-sm">-0.38%</p>
+              <p class="text-blue-5 q-pr-sm">0.0%</p>
               <p>since last month</p>
             </div>
           </q-card-section>
@@ -81,6 +81,8 @@
 
 <script setup>
 import { ref } from "vue";
+import useCustomerData from "app/public/fetchCustomer";
+const { row } = useCustomerData();
 const chartOptions = ref({
   chart: {
     id: "customer-line-chart",

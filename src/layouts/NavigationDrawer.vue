@@ -20,9 +20,15 @@
             <q-img
               src="../assets/titossy_img.png"
               alt="titossy"
+              :width="miniState ? '40px' : '100px'"
+              :height="miniState ? '40px' : '100px'"
+            ></q-img>
+            <!-- <q-img
+              src="../assets/titossy_img.png"
+              alt="titossy"
               width="100px"
               height="100px"
-            ></q-img>
+            ></q-img> -->
           </q-item-section>
         </q-item>
         <q-item to="/" clickable v-ripple>
@@ -46,6 +52,13 @@
           <q-item-section> Employees </q-item-section>
         </q-item>
 
+        <q-item clickable to="/supplier" v-ripple>
+          <q-item-section avatar>
+            <q-icon name="person" />
+          </q-item-section>
+          <q-item-section> Supplier </q-item-section>
+        </q-item>
+
         <q-item to="/schedule" clickable v-ripple>
           <q-item-section avatar>
             <q-icon name="pending_actions" />
@@ -60,11 +73,11 @@
           <q-item-section>Payments</q-item-section>
         </q-item>
 
-        <q-item to="/reporting" clickable v-ripple>
+        <q-item to="/booking" clickable v-ripple>
           <q-item-section avatar>
-            <q-icon name="analytics" />
+            <q-icon name="today" />
           </q-item-section>
-          <q-item-section>Reports</q-item-section>
+          <q-item-section>Booking</q-item-section>
         </q-item>
       </q-list>
     </q-scroll-area>

@@ -150,19 +150,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
-import {
-  collection,
-  onSnapshot,
-  updateDoc,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
+import { ref, watch } from "vue";
+import { updateDoc, deleteDoc, doc } from "firebase/firestore";
 import { db } from "boot/firebase";
 import columns from "./columns.json";
+import useEmployeeData from "app/public/fetchEmployees";
 
 const filter = ref("");
-const row = ref([]);
+// const row = ref([]);
+const { row } = useEmployeeData();
 
 // Deletes an employee from the database
 const deleteRow = async (id) => {
@@ -189,19 +185,34 @@ const toggleStatus = async (row) => {
   await updateDoc(doc(db, "employees", row.id), { status: row.status });
 };
 
-onMounted(async () => {
-  const unsubscribe = onSnapshot(collection(db, "employees"), (snapshot) => {
-    let index = 1;
-    row.value = [];
-    snapshot.forEach((doc) => {
-      const data = { id: doc.id, index: index, ...doc.data() };
-      row.value.push(data);
-      index++;
-    });
-  });
-  console.log(row.value);
-  return unsubscribe;
-});
+// onMounted(async () => {
+//   const unsubscribe = onSnapshot(collection(db, "employees"), (snapshot) => {
+//     let index = 1;
+//     row.value = [];
+//     snapshot.forEach((doc) => {
+//       const data = { id: doc.id, index: index, ...doc.data() };
+//       row.value.push(data);
+//       index++;
+//     });
+//   });
+//   console.log(row.value);
+//   return unsubscribe;
+// });
+// onMounted(async () => {
+//   const unsubscribe = onSnapshot(collection(db, "employees"), (snapshot) => {
+//     let index = 1;
+//     row.value = [];
+//     snapshot.forEach((doc) => {
+//       const data = { id: doc.id, index: index, ...doc.data() };
+//       if (data.role !== "admin" && data.role !== "supplier") {
+//         row.value.push(data);
+//         index++;
+//       }
+//     });
+//   });
+//   console.log(row.value);
+//   return unsubscribe;
+// });
 </script>
 
 <style scoped>
